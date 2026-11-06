@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>节气轮 · 二十四节气的年轮</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23EAEDE7' stroke='%231B1D1A' stroke-width='2'/%3E%3Cpath d='M16 3 A13 13 0 0 1 16 29' fill='%23B24A38'/%3E%3Ccircle cx='16' cy='16' r='4' fill='%231B1D1A'/%3E%3C/svg%3E">
+<style>
+:root{
+  --paper:#EAEDE7;
+  --ink:#1B1D1A;
+  --ink-2:#4A4F49;
+  --line:#C8CEC5;
+  --spring:#3E6B60;
+  --summer:#B24A38;
+  --autumn:#9A7B3F;
+  --winter:#3B4A63;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;
+  font-size:15px;
+  line-height:1.7;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:28px 20px 56px}
+
+/* ---------- 页眉 ---------- */
+.head{display:flex;flex-direction:column;gap:14px;padding-bottom:20px;border-bottom:1px solid var(--line)}
+.head .kicker{font-size:13px;letter-spacing:.18em;color:var(--ink-2)}
+h1{
+  margin:0;
+  font-family:"Songti SC","SimSun",serif;
+  font-weight:700;
+  font-size:clamp(30px,7vw,54px);
+  line-height:1.15;
+  letter-spacing:.02em;
+}
+h1 em{font-style:normal;color:var(--summer)}
+.lede{max-width:34em;color:var(--ink-2);margin:0}
+
+/* ---------- 主体 ---------- */
+.stage{display:grid;grid-template-columns:1fr;gap:28px;margin-top:32px}
+.wheelbox{position:relative;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px}
+.wheelbox svg{width:100%;max-width:520px;height:auto;touch-action:manipulation}
+.hint{margin:0;font-size:13px;color:var(--ink-2)}
+
+/* ---------- 详情 ---------- */
+.detail{border-top:1px solid var(--line);padding-top:22px;display:flex;flex-direction:column;gap:16px}
+.detail .tag{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-2)}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--spring)}
+.detail h2{
+  margin:0;
+  font-family:"Songti SC","SimSun",serif;
+  font-size:clamp(34px,9vw,56px);
+  line-height:1.05;
+  font-weight:700;
+}
+.detail .date{color:var(--ink-2);font-size:14px;margin-top:-6px}
+.hou{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.hou li{display:flex;align-items:baseline;gap:12px;border-top:1px dashed var(--line);padding-top:8px}
+.hou .n{font-family:"Songti SC","SimSun",serif;font-size:13px;color:var(--ink-2);flex:0 0 auto}
+.hou .t{font-size:16px}
+.tip{color:var(--ink-2);font-size:14px;margin:0}
+.jump{
+  align-self:flex-start;
+  border:1px solid var(--ink);
+  background:transparent;
+  color:var(--ink);
+  font:inherit;
+  font-size:14px;
+  padding:9px 16px;
+  border-radius:2px;
+  cursor:pointer;
+}
+.jump:hover{background:var(--ink);color:var(--paper)}
+.jump:focus-visible{outline:2px solid var(--summer);outline-offset:2px}
+@media (max-width:759px){ .jump{width:100%;text-align:center} }
+
+/* ---------- 平铺索引 ---------- */
+.index{margin-top:48px}
+.index h3{
+  margin:0 0 16px;
+  font-family:"Songti SC","SimSun",serif;
+  font-size:20px;
+  font-weight:700;
+}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.cell{
+  background:var(--paper);
+  border:0;
+  font:inherit;
+  text-align:left;
+  padding:14px 14px 12px;
+  cursor:pointer;
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  min-height:64px;
+}
+.cell .cn{font-family:"Songti SC","SimSun",serif;font-size:19px;font-weight:700;line-height:1.2}
+.cell .cd{font-size:12px;color:var(--ink-2)}
+.cell:hover{background:#E1E5DD}
+.cell:focus-visible{outline:2px solid var(--summer);outline-offset:-2px}
+.cell[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.cell[aria-pressed="true"] .cd{color:#C9CFC6}
+
+footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);color:var(--ink-2);font-size:13px;display:flex;flex-wrap:wrap;gap:6px 20px}
+
+@media (min-width:760px){  .wrap{padding:56px 40px 80px}
+  .stage{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:56px;align-items:center}
+  .detail{border-top:0;border-left:1px solid var(--line);padding:0 0 0 44px;min-height:460px;justify-content:center}
+  .grid{grid-template-columns:repeat(4,1fr)}
+  .hou li{grid-template-columns:64px 1fr}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="head">
+    <span class="kicker">二十四节气 · 一年一圈</span>
+    <h1>把一年，<em>转</em>成一只轮</h1>
+    <p class="lede">二十四个节气沿圆周排开，立春在正上方，顺时针转一圈就是一年：夏至落在右下方，冬至落在左下方。点任意一格，看它对应的物候。</p>
+  </header>
+
+  <main class="stage">
+    <div class="wheelbox">
+      <svg id="wheel" viewBox="-200 -200 400 400" role="img" aria-label="二十四节气年轮，可点击选择节气"></svg>
+      <p class="hint">悬停或点击任意扇形，圆心会显示它的名字</p>
+    </div>
+
+    <section class="detail" aria-live="polite">
+      <span class="tag"><i class="dot" id="dot"></i><span id="season">春</span></span>
+      <h2 id="termName">立春</h2>
+      <div class="date" id="termDate">约 2 月 4 日</div>
+      <ul class="hou" id="houList"></ul>
+      <p class="tip" id="termTip"></p>
+      <button class="jump" id="todayBtn" type="button">跳到今天所在的节气</button>
+    </section>
+  </main>
+
+  <div class="index">
+    <h3>二十四个格子</h3>
+    <div class="grid" id="grid"></div>
+  </div>
+
+  <footer>
+    <span>节气依太阳黄经划分，日期每年有一两天的浮动</span>
+    <span>物候取《月令七十二候》三候之说</span>
+  </footer>
+</div>
+
+<script>
+/* ===== 数据：24 节气 ===== */
+const TERMS = [
+  {n:"立春", s:"春", d:[2,4],  hou:["东风解冻","蛰虫始振","鱼陟负冰"], tip:"冰面开裂，土开始松动，一年从这里重新计时。"},
+  {n:"雨水", s:"春", d:[2,19], hou:["獭祭鱼","候雁北","草木萌动"], tip:"雨落下来不再结冰，地气往上走。"},
+  {n:"惊蛰", s:"春", d:[3,6],  hou:["桃始华","仓庚鸣","鹰化为鸠"], tip:"第一声雷过，地下蛰伏的虫都醒了。"},
+  {n:"春分", s:"春", d:[3,21], hou:["元鸟至","雷乃发声","始电"], tip:"昼夜等长，此后白天一天长过一天。"},
+  {n:"清明", s:"春", d:[4,5],  hou:["桐始华","田鼠化为鴽","虹始见"], tip:"雨水最干净的时节，也是扫墓踏青的日子。"},
+  {n:"谷雨", s:"春", d:[4,20], hou:["萍始生","鸣鸠拂其羽","戴胜降于桑"], tip:"雨生百谷，春季最后一个节气。"},
+  {n:"立夏", s:"夏", d:[5,6],  hou:["蝼蝈鸣","蚯蚓出","王瓜生"], tip:"热从地面往上蒸，蛙声起，夏天开场。"},
+  {n:"小满", s:"夏", d:[5,21], hou:["苦菜秀","靡草死","麦秋至"], tip:"麦粒将满未满，是一年里最讲究「差一点」的节气。"},
+  {n:"芒种", s:"夏", d:[6,6],  hou:["螳螂生","鵙始鸣","反舌无声"], tip:"一收一种挤在同一周，农事最忙的时候。"},
+  {n:"夏至", s:"夏", d:[6,21], hou:["鹿角解","蜩始鸣","半夏生"], tip:"白天最长的一天，往后日照开始回缩。"},
+  {n:"小暑", s:"夏", d:[7,7],  hou:["温风至","蟋蟀居壁","鹰始鸷"], tip:"风都是热的，蟋蟀躲到墙缝里避暑。"},
+  {n:"大暑", s:"夏", d:[7,23], hou:["腐草为萤","土润溽暑","大雨时行"], tip:"一年最热，午后雷雨来得最急。"},
+  {n:"立秋", s:"秋", d:[8,8],  hou:["凉风至","白露降","寒蝉鸣"], tip:"热还在，风的方向已经换了。"},
+  {n:"处暑", s:"秋", d:[8,23], hou:["鹰乃祭鸟","天地始肃","禾乃登"], tip:"暑气到此为止，早晚开始有凉意。"},
+  {n:"白露", s:"秋", d:[9,8],  hou:["鸿雁来","元鸟归","群鸟养羞"], tip:"草叶上开始结露，候鸟动身南下。"},
+  {n:"秋分", s:"秋", d:[9,23], hou:["雷始收声","蛰虫坯户","水始涸"], tip:"第二个昼夜等长日，雷声收了，虫封住洞口。"},
+  {n:"寒露", s:"秋", d:[10,8], hou:["鸿雁来宾","雀入大水为蛤","菊有黄华"], tip:"露水凉得刺手，菊花开在最冷的那阵风里。"},
+  {n:"霜降", s:"秋", d:[10,23],hou:["豺乃祭兽","草木黄落","蛰虫咸俯"], tip:"第一场霜下来，树叶落尽，秋天收尾。"},
+  {n:"立冬", s:"冬", d:[11,7], hou:["水始冰","地始冻","雉入大水为蜃"], tip:"水面结出第一层薄冰，夜开始长得明显。"},
+  {n:"小雪", s:"冬", d:[11,22],hou:["虹藏不见","天气上升地气下降","闭塞成冬"], tip:"空气冷到不再起虹，天地间的交流关上了。"},
+  {n:"大雪", s:"冬", d:[12,7], hou:["鹖鴠不鸣","虎始交","荔挺出"], tip:"雪落得最密，夜里的鸟也停了叫。"},
+  {n:"冬至", s:"冬", d:[12,22],hou:["蚯蚓结","麋角解","水泉动"], tip:"夜最长的一天，从这天起白昼一天天回来。"},
+  {n:"小寒", s:"冬", d:[1,6],  hou:["雁北乡","鹊始巢","雉始雊"], tip:"最冷的一段时间开头，雁已经在往回飞。"},
+  {n:"大寒", s:"冬", d:[1,20], hou:["鸡始乳","征鸟厉疾","水泽腹坚"], tip:"冰冻到水底，年轮在这一格闭合。"}
+];
+const SEASON_COLOR = {春:"var(--spring)", 夏:"var(--summer)", 秋:"var(--autumn)", 冬:"var(--winter)"};
+const SEASON_HEX = {春:"#3E6B60", 夏:"#B24A38", 秋:"#9A7B3F", 冬:"#3B4A63"};
+
+/* ===== 轮盘 ===== */
+const SVGNS = "http://www.w3.org/2000/svg";
+const svg = document.getElementById("wheel");
+const R_OUT = 150, R_IN = 60, R_LABEL = 105, STEP = 360 / 24;
+
+function pt(r, deg){
+  const a = (deg - 90) * Math.PI / 180;
+  return [r * Math.cos(a), r * Math.sin(a)];
+}
+function sectorPath(i){
+  const a0 = i * STEP - STEP / 2, a1 = i * STEP + STEP / 2;
+  const [x0,y0] = pt(R_IN, a0), [x1,y1] = pt(R_OUT, a0);
+  const [x2,y2] = pt(R_OUT, a1), [x3,y3] = pt(R_IN, a1);
+  return `M ${x0} ${y0} L ${x1} ${y1} A ${R_OUT} ${R_OUT} 0 0 1 ${x2} ${y2} L ${x3} ${y3} A ${R_IN} ${R_IN} 0 0 1 ${x0} ${y0} Z`;
+}
+
+/* 四季标识：放在圆环外侧，横排 */
+function seasonLabels(){
+  const g = document.createElementNS(SVGNS,"g");
+  ["春","夏","秋","冬"].forEach((s,k)=>{
+    const mid = (k*6 + 2.5) * STEP;
+    const [x,y] = pt(R_OUT + 22, mid);
+    const t = document.createElementNS(SVGNS,"text");
+    t.setAttribute("x",x); t.setAttribute("y",y);
+    t.setAttribute("text-anchor","middle");
+    t.setAttribute("dominant-baseline","middle");
+    t.setAttribute("font-family",'"Songti SC","SimSun",serif');
+    t.setAttribute("font-size","14");
+    t.setAttribute("fill", SEASON_HEX[s]);
+    t.textContent = s;
+    g.appendChild(t);
+  });
+  return g;
+}
+
+const sectors = [];
+function buildWheel(){
+  svg.appendChild(seasonLabels());
+  TERMS.forEach((t,i)=>{
+    const g = document.createElementNS(SVGNS,"g");
+    const p = document.createElementNS(SVGNS,"path");
+    p.setAttribute("d", sectorPath(i));
+    p.setAttribute("fill", SEASON_HEX[t.s]);
+    p.setAttribute("fill-opacity", "0.34");
+    p.setAttribute("stroke", "var(--line)");
+    p.setAttribute("stroke-width","1");
+    p.setAttribute("tabindex","0");
+    p.setAttribute("role","button");
+    p.setAttribute("aria-label", t.n + "，" + t.d[0] + "月" + t.d[1] + "日前后");
+    p.style.cursor = "pointer";
+    p.style.outline = "none";
+    g.appendChild(p);
+
+    g.addEventListener("mouseenter", ()=> showHub(i, true));
+    g.addEventListener("mouseleave", ()=> showHub(current, false));
+    g.addEventListener("click", ()=>select(i));
+    g.addEventListener("keydown", e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); select(i);} });
+    p.addEventListener("focus", ()=> { p.style.outline = "2px solid var(--summer)"; p.style.outlineOffset="-2px"; showHub(i,true); });
+    p.addEventListener("blur", ()=> { p.style.outline = "none"; showHub(current,false); });
+    svg.appendChild(g);
+    sectors.push({g,p});
+  });
+
+  const hub = document.createElementNS(SVGNS,"circle");
+  hub.setAttribute("r", R_IN - 5);
+  hub.setAttribute("fill","none");
+  hub.setAttribute("stroke","var(--ink)");
+  hub.setAttribute("stroke-width","1");
+  svg.appendChild(hub);
+
+  const hubText = document.createElementNS(SVGNS,"text");
+  hubText.setAttribute("id","hubName");
+  hubText.setAttribute("text-anchor","middle");
+  hubText.setAttribute("y","0");
+  hubText.setAttribute("font-family",'"Songti SC","SimSun",serif');
+  hubText.setAttribute("font-size","30");
+  hubText.setAttribute("font-weight","700");
+  hubText.setAttribute("fill","var(--ink)");
+  hubText.textContent = "立春";
+  svg.appendChild(hubText);
+  const hubText2 = document.createElementNS(SVGNS,"text");
+  hubText2.setAttribute("id","hubMeta");
+  hubText2.setAttribute("text-anchor","middle");
+  hubText2.setAttribute("y","26");
+  hubText2.setAttribute("font-size","11");
+  hubText2.setAttribute("letter-spacing","0.08em");
+  hubText2.setAttribute("fill","var(--ink-2)");
+  hubText2.textContent = "";
+  svg.appendChild(hubText2);
+}
+
+/* 轮心显示当前指向的节气；悬停时临时替换 */
+function showHub(i, hovering){
+  const t = TERMS[i];
+  const name = document.getElementById("hubName");
+  const meta = document.getElementById("hubMeta");
+  name.textContent = t.n;
+  name.setAttribute("font-size", hovering ? "26" : "30");
+  name.setAttribute("fill", hovering ? SEASON_HEX[t.s] : "var(--ink)");
+  meta.textContent = t.s + " · " + t.d[0] + "月" + t.d[1] + "日";
+}
+
+/* ===== 选择与详情 ===== */
+let current = 0;
+function select(i){
+  current = i;
+  const t = TERMS[i];
+  sectors.forEach((s,k)=>{
+    const on = k === i;
+    s.p.setAttribute("fill-opacity", on ? "0.92" : "0.34");
+    s.p.setAttribute("stroke", on ? SEASON_HEX[t.s] : "var(--line)");
+    s.p.setAttribute("stroke-width", on ? "2" : "1");
+  });
+  showHub(i, false);
+  document.getElementById("termName").textContent = t.n;
+  document.getElementById("season").textContent = t.s;
+  document.getElementById("dot").style.background = SEASON_COLOR[t.s];
+  document.getElementById("termDate").textContent = "约 " + t.d[0] + " 月 " + t.d[1] + " 日";
+  document.getElementById("termTip").textContent = t.tip;
+  const hou = document.getElementById("houList");
+  hou.innerHTML = "";
+  t.hou.forEach((h,k)=>{
+    const li = document.createElement("li");
+    li.innerHTML = '<span class="n">' + ["初候","二候","三候"][k] + '</span><span class="t">' + h + '</span>';
+    hou.appendChild(li);
+  });
+  [...document.querySelectorAll(".cell")].forEach((c,k)=> c.setAttribute("aria-pressed", k===i ? "true":"false"));
+}
+
+/* ===== 当前节气（按近似日期判断） ===== */
+function currentIndex(){
+  const now = new Date();
+  const m = now.getMonth() + 1, d = now.getDate();
+  const val = m * 100 + d;
+  // 1 月的两个节气属于年轮的收尾，比较时按原始日期；其他月份视为次年，整体后移
+  const key = t => (m === 1 ? t.d[0]*100 + t.d[1] : t.d[0]*100 + t.d[1] + (t.d[0] === 1 ? 1200 : 0));
+  let found = 0;
+  TERMS.forEach((t,i)=>{ if (key(t) <= val) found = i; });
+  return found;
+}
+
+/* ===== 平铺索引 ===== */
+function buildGrid(){
+  const grid = document.getElementById("grid");
+  TERMS.forEach((t,i)=>{
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "cell";
+    b.setAttribute("aria-pressed","false");
+    b.innerHTML = '<span class="cn">' + t.n + '</span><span class="cd">' + t.d[0] + "月" + t.d[1] + "日前后</span>";
+    b.addEventListener("click", ()=> select(i));
+    grid.appendChild(b);
+  });
+}
+
+/* ===== 初始化 ===== */
+buildWheel();
+buildGrid();
+let idx = currentIndex();
+if (new Date().getMonth() + 1 === 1){
+  idx = new Date().getDate() >= 20 ? 23 : 22; // 一月落在小寒、大寒之间
+}
+select(idx);
+document.getElementById("todayBtn").addEventListener("click", ()=>{ select(currentIndex()); svg.scrollIntoView({behavior:"smooth", block:"center"}); });
+</script>
+</body>
+</html>
